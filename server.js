@@ -5,7 +5,16 @@ const cors = require('cors');
 const app = express();
 const port = 5000;
 
-app.use(cors());
+app.use(cors({
+    origin: function(origin, callback) {
+        const allowedOrigins = ['http://localhost:3000', 'https://7-dice-by-jagamohan.vercel.app/'];
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true); 
+        } else {
+            callback(new Error('Not allowed by CORS')); 
+        }
+    }
+}));
 app.use(bodyParser.json());
 
 let userPoints = 5000;
