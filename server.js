@@ -7,11 +7,13 @@ const port = 5000;
 
 app.use(cors({
     origin: function(origin, callback) {
+        console.log("origin=",origin)
         const allowedOrigins = ['http://localhost:3000', 'https://7-dice-by-jagamohan.vercel.app/'];
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true); 
         } else {
             callback(new Error('Not allowed by CORS')); 
+
         }
     }
 }));
@@ -68,6 +70,7 @@ app.post('/bet', (req, res) => {
 
 // GET endpoint to get user points
 app.get('/points', (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.json({ points: userPoints });
 });
 
